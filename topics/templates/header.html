@@ -1,0 +1,22 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="{% url 'index' %}"> <i class="fa fa-comments-o"> Forum</i></a>
+    </div>
+
+	<div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <li><a href="#">{{ user.username }} <i class="fa fa-user"></i></a></li>
+                <li><a href="{% url 'logout' %}">Выйти <i class="fa fa-sign-out"></i></a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Войти или Зарегестрироваться <i class="fa fa-sign-in"></i> </a></li>
+            {% endif %}
+
+		</ul>
+	</div>
+</nav>

@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <h2><i class="fa fa-exclamation-triangle"></i> Правила добавления новой темы:</h2>
+
+    {% lorem 1 p %}
+
+    <h1>Новая тема</h1>
+    <form method="post" class="form-inline">
+        <div class="form-group {% if add_form.name.errors %}has-error{% endif %}">
+            <div class="input-group">
+                {% csrf_token %}
+                {{ add_form.name }}
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-primary input-group" value="Создать тему">
+    </form>
+    {% if add_form.name.errors %}
+        <i class="fa fa-asterisk" style="color: #A94442"> Поле обязательно </i>
+    {% endif %}
+
+{% endblock %}
