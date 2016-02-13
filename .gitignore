@@ -1,5 +1,5 @@
-
 .idea/*
 
 *.pyc
 
+db1.sqlite3
