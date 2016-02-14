@@ -1,7 +1,8 @@
 {% extends 'index.html' %}
+{% load bootstrap %}
 
 {% block script %}
-<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" defer></script>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" async></script>
 {% endblock %}
 
 {% block content %}
@@ -47,8 +48,8 @@
     <div class="form-group">
         <form method="post">
             {% csrf_token %}
-            {{ message_form.text }}
-            <input type="submit" class="btn btn-warning" value="Написать" style="position: relative; bottom: 40px; left: 10px"/>
+            {{ message_form|bootstrap }}
+            <input type="submit" class="btn btn-warning" value="Написать"/>
         </form>
     </div>
 

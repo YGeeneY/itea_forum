@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import MessageForm, TopicModelForm
+from .forms import MessageModelForm, TopicModelForm
 from .models import Topic, Moder, Message
 
 
@@ -22,16 +22,17 @@ def add(request):
         add_form = TopicModelForm(request.POST)
 
         if add_form.is_valid():
-            topic = add_form.save(commit=False)
+            pre_saved_form = add_form.save(commit=False)
 
             moder = Moder.objects.get(id=1)
-            topic.author = user
-            topic.moder = moder
-            topic.save()
+            pre_saved_form.author = user
+            pre_saved_form.moder = moder
+            pre_saved_form.save()
 
             return redirect('/topics/index')
     else:
         add_form = TopicModelForm()
+
     return render(request, 'add.html', {
         'add_form': add_form,
     })
@@ -40,35 +41,29 @@ def add(request):
 def detail(request, id):
     try:
         topic = Topic.objects.get(id=int(id))
-        messages = Message.objects.filter(topic=topic)
     except ObjectDoesNotExist:
         raise Http404
 
-    form = MessageForm()
+    messages = Message.objects.filter(topic=topic)
 
-    if request.method == 'GET':
-        return render(request, 'detail.html', {
-            'topic': topic,
-            'messages': messages,
-            'message_form': form
-        })
-
-    elif request.method == 'POST':
-        form = MessageForm(request.POST)
-
+    if request.method == 'POST':
+        form = MessageModelForm(request.POST)
         user = request.user
 
         if form.is_valid():
-            Message.objects.create(
-                topic=topic,
-                text=request.POST['text'],
-                author=user,
-            )
+            pre_saved_form = form.save(commit=False)
+            
+            pre_saved_form.topic = topic
+            pre_saved_form.author = user
+            pre_saved_form.save()
+            
             return redirect('/topics/%s' % id)
 
-        else:
-            return render(request, 'detail.html', {
-                'topic': topic,
-                'messages': messages,
-                'message_form': form
-            })
+    else:
+        form = MessageModelForm()
+
+    return render(request, 'detail.html', {
+        'topic': topic,
+        'messages': messages,
+        'message_form': form
+    })

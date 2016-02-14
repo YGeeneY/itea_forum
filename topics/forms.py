@@ -4,11 +4,11 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from topics.models import Topic
+from topics.models import Topic, Message
 
 
 class TopicModelForm(forms.ModelForm):
-    
+
     class Meta:
         model = Topic
         fields = ('name', )
@@ -17,14 +17,13 @@ class TopicModelForm(forms.ModelForm):
         }
 
 
-class MessageForm(forms.Form):
-    text = forms.CharField(widget=forms.Textarea(
-        attrs={'class': "form-control",
-               'id': 'markItUp',
-               'style': 'resize: none; padding-bottom: 45px;',
-               'placeholder': "Текст сообщения"
-               }
-    ))
+class MessageModelForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('text', )
+        labels = {
+            'text': 'Текст сообщения:'
+        }
 
 
 class LoginForm(forms.Form):
