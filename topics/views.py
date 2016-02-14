@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import TopicForm, MessageForm
+from .forms import MessageForm, TopicModelForm
 from .models import Topic, Moder, Message
 
 
@@ -19,19 +19,19 @@ def add(request):
         if user.is_anonymous():
             return redirect('/topics/login/')
 
-        add_form = TopicForm(request.POST)
-        if add_form.is_valid():
-            user = User.objects.get(id=1)
-            moder = Moder.objects.get(id=1)
+        add_form = TopicModelForm(request.POST)
 
-            Topic.objects.create(
-                name=request.POST['name'],
-                author=user,
-                moder=moder
-            )
+        if add_form.is_valid():
+            topic = add_form.save(commit=False)
+
+            moder = Moder.objects.get(id=1)
+            topic.author = user
+            topic.moder = moder
+            topic.save()
+
             return redirect('/topics/index')
     else:
-        add_form = TopicForm()
+        add_form = TopicModelForm()
     return render(request, 'add.html', {
         'add_form': add_form,
     })

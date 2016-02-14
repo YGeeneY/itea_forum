@@ -1,19 +1,20 @@
 import re
+
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+from topics.models import Topic
 
-class TopicForm(forms.Form):
-    name = forms.CharField(label='Название', max_length=1000, widget=forms.TextInput(
-        attrs={'class': "form-control", 'placeholder': "Название темы"}
-    ))
 
-    def clean_name(self):
-        name = self.cleaned_data['name']
-        if '?' in name:
-            raise ValidationError("Знак вопроса недопустим")
-        return name
+class TopicModelForm(forms.ModelForm):
+    
+    class Meta:
+        model = Topic
+        fields = ('name', )
+        labels = {
+            'name': 'Название темы:'
+        }
 
 
 class MessageForm(forms.Form):
@@ -28,7 +29,6 @@ class MessageForm(forms.Form):
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(), label='Логин:')
-
     password = forms.CharField(widget=forms.PasswordInput(), label='Пароль:')
 
 
