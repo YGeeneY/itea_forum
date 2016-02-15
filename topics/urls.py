@@ -1,10 +1,10 @@
 from django.conf.urls import url
 
-from .views import index, detail, AddView
+from .views import detail, AddView, IndexView
 from .auth_view import logout_view, RegisterView, LoginView
 
 urlpatterns = [
-    url(r"^index/$", index, name='index'),
+    url(r"^index/$", IndexView.as_view(), name='index'),
     url(r"^add/$", AddView.as_view(), name='add'),
     url(r"^(?P<id>[0-9]+)/$", detail),
     url(r"^logout/$", logout_view, name='logout'),
