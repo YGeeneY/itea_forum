@@ -1,10 +1,11 @@
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 
 from django.views.generic import FormView
 
-from topics.forms import LoginForm, UserCreateForm
+from topics.forms import UserCreateForm
 
 
 def logout_view(request):
@@ -12,28 +13,10 @@ def logout_view(request):
     return redirect('/topics/login')
 
 
-def login_view(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        error = False
-
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('/topics/index')
-                else:
-                    error = 'Данный аккуант заблокирован'
-            else:
-                error = 'Пользователя с таким именем не существует, либо пароль не верный'
-        return render(request, 'log_in.html', {'form': form, 'error': error})
-
-    elif request.method == 'GET':
-        logout(request)
-        return render(request, 'log_in.html', {'form': LoginForm})
+class LoginView(FormView):
+    form_class = AuthenticationForm
+    template_name = 'log_in.html'
+    success_url = '/topics/index'
 
 
 class RegisterView(FormView):
