@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+{% load bootstrap %}
+{% block content %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <i class="fa fa-life-ring fa-3x" style="color: orange">Правила пользования форумом</i>
+            <blockquote style="margin-top: 20px; border-right: 5px solid rgba(255, 165, 0, 0.42);" class="blockquote-reverse">
+            {% lorem 2 p %}
+            </blockquote>
+        </div>
+        <div class="col-md-6">
+            {% block form %}
+                <form class="form-signin" method="post">
+                    {% if error %}
+                        <h2 class="form-signin-heading"  style="color: red">{{ error }}</h2>
+                    {% else %}
+                        <h2 class="form-signin-heading">Пожалуйста, введите логин и пароль</h2>
+                    {% endif %}
+                    {% csrf_token %}
+                    {{ form|bootstrap }}
+
+                    <div class="form-group">
+                        <button style="margin-top: 15px" class="btn btn-lg btn-warning btn-block" type="submit">Войти</button>
+
+                        <div class="text-center"  style="margin: 3px 0"> Или </div>
+
+                        <a href="{% url 'register' %}" class="btn btn-lg btn-info btn-block">Зарегестрироваться</a>
+                    </div>
+                </form>
+
+                <style>.form-group {  margin-bottom: 0;}</style>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
