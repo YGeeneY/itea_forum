@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.http.response import Http404, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.http.response import Http404
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView
 
-from .forms import MessageModelForm, TopicModelForm
+from .forms import MessageModelForm
 from .models import Topic, Moder, Message
 
 
@@ -13,29 +13,20 @@ def index(request):
     })
 
 
-def add(request):
-    if request.method == 'POST':
-        user = request.user
-        if user.is_anonymous():
-            return redirect('/topics/login/')
+class AddView(CreateView):
+    template_name = 'add.html'
+    success_url = '/topics/index'
+    model = Topic
 
-        add_form = TopicModelForm(request.POST)
+    fields = ('name', )
 
-        if add_form.is_valid():
-            pre_saved_form = add_form.save(commit=False)
+    def form_valid(self, form):
+        topic = form.save(commit=False)
+        topic.author = self.request.user
+        topic.moder = Moder.objects.get(pk=1)
+        topic.save()
 
-            moder = Moder.objects.get(id=1)
-            pre_saved_form.author = user
-            pre_saved_form.moder = moder
-            pre_saved_form.save()
-
-            return redirect('/topics/index')
-    else:
-        add_form = TopicModelForm()
-
-    return render(request, 'add.html', {
-        'add_form': add_form,
-    })
+        return redirect(self.success_url)
 
 
 def detail(request, id):

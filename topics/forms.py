@@ -4,17 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from topics.models import Topic, Message
-
-
-class TopicModelForm(forms.ModelForm):
-
-    class Meta:
-        model = Topic
-        fields = ('name', )
-        labels = {
-            'name': 'Название темы:'
-        }
+from topics.models import Topic, Message, Moder
 
 
 class MessageModelForm(forms.ModelForm):
