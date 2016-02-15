@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views import add, index, detail
-from .auth_view import logout_view, login_view, register_view
+from .auth_view import logout_view, login_view, RegisterView
 
 urlpatterns = [
     url(r"^index/$", index, name='index'),
@@ -9,6 +9,5 @@ urlpatterns = [
     url(r"^(?P<id>[0-9]+)/$", detail),
     url(r"^logout/$", logout_view, name='logout'),
     url(r"^login/$", login_view, name='login'),
-    url(r"^register/$", register_view, name='register'),
-
+    url(r"^register/$", RegisterView.as_view(), name='register'),
 ]

@@ -2,7 +2,9 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
-from topics.forms import LoginForm, RegisterForm
+from django.views.generic import FormView
+
+from topics.forms import LoginForm, UserCreateForm
 
 
 def logout_view(request):
@@ -34,23 +36,17 @@ def login_view(request):
         return render(request, 'log_in.html', {'form': LoginForm})
 
 
-def register_view(request):
-    if request.method == 'GET':
-        logout(request)
-        form = RegisterForm()
-        return render(request, 'register.html', {'form': form})
+class RegisterView(FormView):
+    form_class = UserCreateForm
+    template_name = 'register.html'
+    success_url = '/topics/index'
 
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = User.objects.create_user(username=username, email=email, password=password)
-            user = authenticate(username=username, password=password)
-            login(request, user)
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password1']
+        User.objects.create_user(username=username, email=email, password=password)
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
 
-            return redirect('/topics/index')
-
-        else:
-            return render(request, 'register.html', {'form': form})
+        return super(RegisterView, self).form_valid(form)
