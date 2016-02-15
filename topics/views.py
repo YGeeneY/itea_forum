@@ -1,19 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, ListView
 
 from .forms import MessageModelForm
 from .models import Topic, Moder, Message
 
 
-class IndexView(TemplateView):
+class IndexView(ListView):
+    model = Topic
     template_name = 'index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data()
-        context['topics'] = Topic.objects.all()
-        return context
 
 
 class AddView(CreateView):
