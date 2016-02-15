@@ -18,6 +18,14 @@ class LoginView(FormView):
     template_name = 'log_in.html'
     success_url = '/topics/index'
 
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+
+        return super(LoginView, self).form_valid(form)
+
 
 class RegisterView(FormView):
     form_class = UserCreateForm
