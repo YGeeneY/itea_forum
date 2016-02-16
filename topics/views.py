@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView, TemplateView, ListView
 
 from .forms import MessageModelForm
@@ -26,6 +26,22 @@ class AddView(CreateView):
         topic.save()
 
         return redirect(self.success_url)
+
+
+class MessageAddView(CreateView):
+    template_name = 'add_message.html'
+    model = Message
+    fields = ('text', )
+
+    def form_valid(self, form):
+        message = form.save(commit=False)
+        message.author = self.request.user
+        pk = self.kwargs['pk']
+        topic = get_object_or_404(Topic, pk=pk)
+        message.topic = topic
+        message.save()
+
+        return redirect('/topics/%s' % pk)
 
 
 def detail(request, id):

@@ -7,7 +7,6 @@
 
 {% block content %}
     <h1>Topic: {{ topic.name }}</h1>
-
     {% for message in messages %}
         <div class="media">
             <div class="media-left">
@@ -44,14 +43,7 @@
         </div>
 
     {% endfor %}
-
-    <div class="form-group">
-        <form method="post">
-            {% csrf_token %}
-            {{ message_form|bootstrap }}
-            <input type="submit" class="btn btn-warning" value="Написать"/>
-        </form>
-    </div>
+    <a href="/topics/create/{{ topic.id }}" class="btn btn-block btn-primary btn-lg">Create new message</a>
 
 {% endblock %}
 

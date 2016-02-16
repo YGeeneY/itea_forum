@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import detail, AddView, IndexView
+from .views import detail, AddView, IndexView, MessageAddView
 from .auth_view import logout_view, RegisterView, LoginView
 
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     url(r"^logout/$", logout_view, name='logout'),
     url(r"^login/$", LoginView.as_view(), name='login'),
     url(r"^register/$", RegisterView.as_view(), name='register'),
+    url(r"^create/(?P<pk>[0-9]+)$", MessageAddView.as_view(), name='m_add'),
+
 ]
