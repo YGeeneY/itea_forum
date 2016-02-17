@@ -12,3 +12,4 @@ urlpatterns = [
     url(r"^register/$", RegisterView.as_view(), name='register'),
     url(r"^create/(?P<pk>[0-9]+)$", MessageAddView.as_view(), name='m_add'),
 ]
+

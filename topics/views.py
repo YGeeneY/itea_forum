@@ -6,7 +6,9 @@ from .models import Topic, Moder, Message
 
 class IndexView(ListView):
     model = Topic
-    template_name = 'index.html'
+    template_name = 'landing/landing_topics.html'
+    context_object_name = 'topics'
+    # template_name = 'index.html'
 
 
 class AddView(CreateView):
