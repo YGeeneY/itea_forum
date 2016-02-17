@@ -1,9 +1,6 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.http.response import Http404
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import CreateView, TemplateView, ListView
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import CreateView, ListView
 
-from .forms import MessageModelForm
 from .models import Topic, Moder, Message
 
 
@@ -44,32 +41,23 @@ class MessageAddView(CreateView):
         return redirect('/topics/%s' % pk)
 
 
-def detail(request, id):
-    try:
-        topic = Topic.objects.get(id=int(id))
-    except ObjectDoesNotExist:
-        raise Http404
+class MessageListView(ListView):
+    template_name = 'detail.html'
+    model = Message
+    context_object_name = 'messages'
 
-    messages = Message.objects.filter(topic=topic)
+    def get_context_data(self, **kwargs):
+        context = super(MessageListView, self).get_context_data()
+        pk = self.kwargs['pk']
+        topic = get_object_or_404(Topic, pk=pk)
+        context['topic'] = topic
 
-    if request.method == 'POST':
-        form = MessageModelForm(request.POST)
-        user = request.user
+        return context
 
-        if form.is_valid():
-            pre_saved_form = form.save(commit=False)
-            
-            pre_saved_form.topic = topic
-            pre_saved_form.author = user
-            pre_saved_form.save()
-            
-            return redirect('/topics/%s' % id)
+    def get_queryset(self):
+        qs = super(MessageListView, self).get_queryset()
+        pk = self.kwargs['pk']
+        topic = get_object_or_404(Topic, pk=pk)
+        qs = qs.filter(topic=topic)
 
-    else:
-        form = MessageModelForm()
-
-    return render(request, 'detail.html', {
-        'topic': topic,
-        'messages': messages,
-        'message_form': form
-    })
+        return qs
