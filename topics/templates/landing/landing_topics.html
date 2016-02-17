@@ -17,14 +17,14 @@ background: #1976D2;
         <div class="row" style="background: #2C3940; padding: 50px 0">
 
             <div class="container" style="color: #DBDBDB;">
-                <h2 class="pull-left" style=" font-weight: 300; font-family:Sans">Section Name</h2>
-                <button class="btn btn-primary pull-right" style="margin-top: 23px"><i class="fa fa-pencil"> Add new topic</i></button>
+                <h2 class="pull-left" style=" font-weight: 300; font-family:Sans">{% block topic_header %}Section Name{% endblock %}</h2>
+                <button class="btn btn-primary pull-right" style="margin-top: 23px"><i class="fa fa-pencil">{% block topic_button %} Add new topic{% endblock %}</i></button>
             </div>
 
         </div>
 
     </div>
-
+{% block topic %}
     <div class="row" >
 
     <div class="col-md-8 col-md-offset-1" >
@@ -77,6 +77,7 @@ background: #1976D2;
             </tbody>
         </table>
     </div>
+{% endblock %}
     <div class="col-md-1" style="margin-top: 25px">
         <i class="fa fa-filter"></i>
         <i class="fa fa-search" style="margin-left: 15px"></i>

@@ -44,7 +44,7 @@ class MessageAddView(CreateView):
 
 
 class MessageListView(ListView):
-    template_name = 'detail.html'
+    template_name = 'landing/landing_topic.html'
     model = Message
     context_object_name = 'messages'
 
