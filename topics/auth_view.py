@@ -15,7 +15,7 @@ def logout_view(request):
 
 class LoginView(FormView):
     form_class = AuthenticationForm
-    template_name = 'log_in.html'
+    template_name = 'landing/login.html'
     success_url = '/topics/index'
 
     def form_valid(self, form):
@@ -29,7 +29,7 @@ class LoginView(FormView):
 
 class RegisterView(FormView):
     form_class = UserCreateForm
-    template_name = 'register.html'
+    template_name = 'landing/register.html'
     success_url = '/topics/index'
 
     def form_valid(self, form):

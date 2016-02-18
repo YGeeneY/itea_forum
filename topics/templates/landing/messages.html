@@ -1,0 +1,50 @@
+{% extends 'landing/deep_base.html' %}
+
+
+{% block subheader %}
+    {{ topic.name }}
+{% endblock %}
+
+
+{% block subheader_btn %}
+    <a class="btn btn-primary pull-right" href="{% url 'm_add' pk=topic.id %}" style="margin-top: 23px">
+        <i class="fa fa-pencil"> Добавить сообщение </i>
+    </a>
+{% endblock %}
+
+{% block infopanel_text %}
+    {{ messages.count }} сообщений
+{% endblock %}
+
+{% block page_content %}
+    {% for message in messages %}
+
+        <div class="container" style="margin-top: 10px">
+            <div class="row" >
+                <div class="col-md-1">
+                    <i class="fa fa-user fa-5x"></i>
+                    <br>
+                    <strong>{{ message.author }}</strong>
+                </div>
+                <div class="col-md-11" style="
+                border: medium none;
+                box-sizing: border-box;
+                background: white;
+                box-shadow: 2px 2px 10px -3px black;">
+
+                    <div class="row" style="padding: 0 20px">
+                        <h4>!TODO message title<small class="pull-right">#{{ message.id }}</small></h4><hr>
+                    </div>
+
+                    {{ message.text | linebreaks}}
+
+                    <div class="row" style="padding: 5px; background: #FCFCFC; border-top: 1px solid #F0F0F0;">
+                        <a href="">Цитировать</a>
+                        <span class="pull-right">{{ message.date }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+{% endblock %}

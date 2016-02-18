@@ -1,0 +1,45 @@
+{% extends 'landing/base.html' %}
+
+
+{% block content %}
+
+    <div id="subheader">
+        <div class="row" style="background: #2C3940; padding: 50px 0">
+            <div class="container" style="color: #DBDBDB;">
+                <h2 class="pull-left" style=" font-weight: 300; font-family:Sans">
+
+                    {% block subheader %}
+                    {% endblock %}
+
+                </h2>
+                {% block subheader_btn %}
+
+                {% endblock %}
+
+            </div>
+        </div>
+    </div>
+
+    {% block infopanel %}
+    <div class="container" style="margin-top: 25px">
+        <div class="row">
+            <div class="col-md-12">
+                <small>
+                    {% block infopanel_text %}
+                    {% endblock %}
+                </small>
+
+                <div class="pull-right">
+                    <i class="fa fa-filter"></i>
+                    <i class="fa fa-search" style="margin-left: 15px"></i>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div> <!--Info panel-->
+    {% endblock %}
+
+    {% block page_content %}
+    {% endblock page_content %}
+
+{% endblock content %}
