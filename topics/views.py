@@ -6,13 +6,13 @@ from .models import Topic, Moder, Message
 
 class IndexView(ListView):
     model = Topic
-    template_name = 'landing/landing_topics.html'
+    template_name = 'landing/topic.html'
     context_object_name = 'topics'
     # template_name = 'index.html'
 
 
 class AddView(CreateView):
-    template_name = 'add.html'
+    template_name = 'landing/add_new_topic.html'
     success_url = '/topics/index'
     model = Topic
 
@@ -28,7 +28,7 @@ class AddView(CreateView):
 
 
 class MessageAddView(CreateView):
-    template_name = 'add_message.html'
+    template_name = 'landing/add_new_message.html'
     model = Message
     fields = ('text', )
 
@@ -44,7 +44,7 @@ class MessageAddView(CreateView):
 
 
 class MessageListView(ListView):
-    template_name = 'landing/landing_topic.html'
+    template_name = 'landing/messages.html'
     model = Message
     context_object_name = 'messages'
 

@@ -1,0 +1,23 @@
+{% extends 'landing/deep_base.html' %}
+{% load bootstrap %}
+
+{% block subheader %}
+Добавить новое сообщение
+{% endblock %}
+
+{% block infopanel %}
+{% endblock %}
+
+
+{% block page_content %}
+    <div class="container">
+        <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|bootstrap }}
+                <input type="submit" class="btn btn-primary btn-block" value="Написать"/>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

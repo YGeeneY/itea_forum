@@ -1,0 +1,44 @@
+{% extends 'landing/deep_base.html' %}
+{% load bootstrap %}
+
+{% block subheader %}
+Добро пожаловать
+{% endblock %}
+
+{% block infopanel %}
+{% endblock %}
+
+
+{% block page_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" style="margin-top: 15px">
+            <i class="fa fa-life-ring fa-3x" style="color: #1976D2"> Правила пользования форумом</i>
+            <blockquote style="margin-top: 20px; border-right: 5px solid #1976D2;" class="blockquote-reverse">
+            {% lorem 2 p %}
+            </blockquote>
+        </div>
+
+        <div class="col-md-6">
+            {% block form %}
+                <form class="form-signin" method="post">
+
+                    <h2 class="form-signin-heading">Пожалуйста, введите логин и пароль</h2>
+
+                    {% csrf_token %}
+                    {{ form|bootstrap }}
+
+                    <div class="form-group">
+                        <button style="margin-top: 15px" class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+
+                        <div class="text-center"  style="margin: 3px 0"> Или </div>
+
+                        <a href="{% url 'register' %}" class="btn btn-lg btn-danger btn-block">Зарегестрироваться</a>
+                    </div>
+                </form>
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -23,7 +23,7 @@ import topics.urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^topics/', include(topics.urls)),
-    url(r'^landing/$', TemplateView.as_view(template_name='landing/landing.html')),
-    url(r'^landing/topics/$', TemplateView.as_view(template_name='landing/landing_topics.html')),
+    url(r'^landing/$', TemplateView.as_view(template_name='landing/base.html')),
+    url(r'^landing/topics/$', TemplateView.as_view(template_name='landing/topic.html')),
 
 ]

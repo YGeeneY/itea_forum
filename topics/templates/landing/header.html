@@ -1,16 +1,23 @@
 <div id="header" class="navbar-fixed-top">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="container">
 
         <ol class="list-inline pull-left">
-          <li><a href="#"><i class="fa fa-home">Home</i></a></li>
+          <li><a href="{% url 'index' %}"><i class="fa fa-home"> Домой</i></a></li>
         </ol>
 
         <ol id="myNavbar" class="list-inline pull-right">
-            <li class="list-inline-item hidden-xs"><a href="">FAQ</a></li>
-            <li class="list-inline-item"><a href="">Login</a></li>
-            <li class="list-inline-item"><a href="">Register</a></li>
-            <li class="list-inline-item  hidden-xs"><a href=""><i class="fa fa-search"></i></a></li>
-            <li class="list-inline-item"><a href=""><i class="fa fa-bars"></i></a></li>
+            <li class="list-inline-item hidden-xs"><a href="#">FAQ</a></li>
+            <li class="list-inline-item  hidden-xs"><a href="#"><i class="fa fa-search"></i></a></li>
+
+            {% if user.is_authenticated %}
+                <li class="list-inline-item "><a href="#">{{ user.username }}</a></li>
+                <li class="list-inline-item"><a href="{% url 'logout' %}"><i class="fa fa-sign-out"> Выйти</i></a></li>
+            {% else %}
+                 <li class="list-inline-item"><a href="{% url 'login' %}"><i class="fa fa-sign-in"> Войти</i></a></li>
+                 <li class="list-inline-item"><a href="{% url 'register' %}">Зарегестрироваться</a></li>
+            {% endif %}
+
+            <li class="list-inline-item"><a href="#"><i class="fa fa-bars"></i></a></li>
         </ol>
     </div>
 </div>

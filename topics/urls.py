@@ -10,6 +10,6 @@ urlpatterns = [
     url(r"^logout/$", logout_view, name='logout'),
     url(r"^login/$", LoginView.as_view(), name='login'),
     url(r"^register/$", RegisterView.as_view(), name='register'),
-    url(r"^create/(?P<pk>[0-9]+)$", MessageAddView.as_view(), name='m_add'),
+    url(r"^create/(?P<pk>[0-9]+)$", MessageAddView.as_view(), name='m_add',),
 ]
 

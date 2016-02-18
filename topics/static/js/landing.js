@@ -7,7 +7,7 @@ $(document).ready(function() {
             opacity = scrollHeight - headerHeight,
             $btt = $('#back-to-top');
 
-        if (scrollHeight > 400){
+        if (scrollHeight > 250){
             $btt.show()
         } else {
             $btt.hide()
