@@ -17,12 +17,15 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 import topics.urls
+import accounts.urls
 
 from section.views import SectionView
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^(?P<slug>[\w-]+)/', include(topics.urls)),
     url(r'^$', SectionView.as_view(), name='main'),
+    url(r'^(?P<slug>[\w-]+)/', include(topics.urls)),
+    url(r'^account/', include(accounts.urls)),
+
 ]
