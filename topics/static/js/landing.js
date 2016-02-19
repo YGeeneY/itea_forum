@@ -13,7 +13,7 @@ $(document).ready(function() {
             $btt.hide()
         }
 
-        header.css("background", "rgba(25, 118, 210, " + opacity / 200 + ")");
+        header.css("background", "rgba(25, 118, 210, " + opacity / 100 + ")");
     });
 
     $('.toggle-topic').on("click", function(){

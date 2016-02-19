@@ -7,7 +7,7 @@ class MessageInline(admin.StackedInline):
     extra = 2
 
 class TopicAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date', 'state')
+    list_display = ('name', 'date', 'state', 'section')
     inlines = [MessageInline, ]
 
 admin.site.register(Topic, TopicAdmin)

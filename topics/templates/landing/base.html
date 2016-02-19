@@ -29,176 +29,67 @@
     <div class="row" >
 
         <div class="container" >
+            {% for section in sections %}
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Main</th>
-                    <th></th>
-                    <th class="hidden-md-down"></th>
-                    <th class="text-right"><i class="fa fa-minus-circle toggle-topic"></i></th>
+{#                    <th><a href="{{ section.slug }}">{{ section.name }}</a></th>#}
+{#                    <th></th>#}
+{#                    <th class="hidden-md-down"></th>#}
+{#                    <th class="text-right"><i class="fa fa-minus-circle toggle-topic"></i></th>#}
+
+                    <th><a href="{{ section.slug }}">{{ section.name }}</a></th>
+                    <th>Тема</th>
+                    <th>rss</th>
+                    <th class="hidden-md-down text-center">Всего сообщений</th>
+                    <th class="text-center">Автор</th>
+                    <th class="text-center hidden-xs hidden-sm">Последнее сообщение <i class="fa fa-minus-circle toggle-topic pull-right"></i></th>
                 </tr>
                 </thead>
 
                 <tbody>
+                {% for topic in section.last_five %}
+                    <tr>
+                        <td class="col-md-1 text-center">
+                            <i class="{{ topic.topic_icon }}"></i>
+                        </td>
 
-                <tr>
-                    <td class="col-md-4">
-                        <div class="media">
-                            <div class="media-left media-middle">
-                                <i class="fa fa-comment-o fa-2x"></i>
-                            </div>
+                        <td>
+                            <h4>
+                                {% if topic.message_set.count >= 10 %}
+                                    <i data-toggle="tooltip" data-placement="bottom" title="Hot" class="fa fa-fire" style="color: red; cursor: help"></i>
+                                {% endif %}
 
-                            <div class="media-body">
-                                <h4 class="media-heading">Media heading1 <!-- Message Title --></h4>
-                                <!--Message body-->
-                                Media booody boood6y
+                                <a href="{{ topic.get_absolute_url }}">{{ topic.name }}</a>
+                            </h4>
+                        </td>
 
-                                <br> <em>Moderator: asdj</em>
-                            </div>
-                        </div>
-                    </td>
+                        <td><i class="fa fa-rss"></i></td>
 
-                    <td><i class="fa fa-rss"></i></td>
-                    <td>
-                        6
-                        <span class="text-muted">topics</span>
-                        <br>42
-                        <span class="text-muted">messages</span>
-                    </td>
+                        <td class="text-center">{{ topic.message_set.count }}</td>
 
-                    <td class="col-md-5 hidden-md-down">
+                        <td class="text-center">
+                            Автор: {{ topic.author }}
+                            <br>
+                            <small><i class="fa fa-clock-o"></i> {{ topic.date }}</small>
+                        </td>
 
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#"><img src="http://gramziu.pl/phpBB/download/file.php?avatar=2_1424820906.png" alt="" class="img-rounded"></a>
-                            </div>
-                            <div class="media-body">
-                                Re: Popular topic<br>
-                                <span class="text-muted">by: </span>User <br>
-                                07 Dec 2015, 20:03
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <div class="media">
-                            <div class="media-left media-middle">
-                                <i class="fa fa-comment-o fa-2x"></i>
-                            </div>
+                        {% if topic.message_set.count  %}
+                            <td class="hidden-xs hidden-sm text-center">
+                                Автор: {{ topic.message_set.last.author }}
+                                <br>
+                                <small><i class="fa fa-clock-o"></i> {{ topic.message_set.last.date }}</small>
+                            </td>
+                        {% else %}
+                            <td class="hidden-xs hidden-sm text-center">Нет сообщений</td>
+                        {% endif %}
 
-                            <div class="media-body">
-                                <h4 class="media-heading">Media heading1 <!-- Message Title --></h4>
-                                <!--Message body-->
-                                Media booody boood6y
+                    </tr>
 
-                                <br> <em>Moderator: asdj</em>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td><i class="fa fa-rss"></i></td>
-                    <td>
-                        6
-                        <span class="text-muted">topics</span>
-                        <br>42
-                        <span class="text-muted">messages</span>
-                    </td>
-
-                    <td class="col-md-5 hidden-md-down">
-
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#"><img src="http://gramziu.pl/phpBB/download/file.php?avatar=2_1424820906.png" alt="" class="img-rounded"></a>
-                            </div>
-                            <div class="media-body">
-                                Re: Popular topic<br>
-                                <span class="text-muted">by: </span>User <br>
-                                07 Dec 2015, 20:03
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <div class="media">
-                            <div class="media-left media-middle">
-                                <i class="fa fa-comment-o fa-2x"></i>
-                            </div>
-
-                            <div class="media-body">
-                                <h4 class="media-heading">Media heading1 <!-- Message Title --></h4>
-                                <!--Message body-->
-                                Media booody boood6y
-
-                                <br> <em>Moderator: asdj</em>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td><i class="fa fa-rss"></i></td>
-                    <td>
-                        6
-                        <span class="text-muted">topics</span>
-                        <br>42
-                        <span class="text-muted">messages</span>
-                    </td>
-
-                    <td class="col-md-5 hidden-md-down">
-
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#"><img src="http://gramziu.pl/phpBB/download/file.php?avatar=2_1424820906.png" alt="" class="img-rounded"></a>
-                            </div>
-                            <div class="media-body">
-                                Re: Popular topic<br>
-                                <span class="text-muted">by: </span>User <br>
-                                07 Dec 2015, 20:03
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <div class="media">
-                            <div class="media-left media-middle">
-                                <i class="fa fa-comment-o fa-2x"></i>
-                            </div>
-
-                            <div class="media-body">
-                                <h4 class="media-heading">Media heading1 <!-- Message Title --></h4>
-                                <!--Message body-->
-                                Media booody boood6y
-
-                                <br> <em>Moderator: asdj</em>
-                            </div>
-                        </div>
-                    </td>
-
-                    <td><i class="fa fa-rss"></i></td>
-                    <td>
-                        6
-                        <span class="text-muted">topics</span>
-                        <br>42
-                        <span class="text-muted">messages</span>
-                    </td>
-
-                    <td class="col-md-5 hidden-md-down">
-
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#"><img src="http://gramziu.pl/phpBB/download/file.php?avatar=2_1424820906.png" alt="" class="img-rounded"></a>
-                            </div>
-                            <div class="media-body">
-                                Re: Popular topic<br>
-                                <span class="text-muted">by: </span>User <br>
-                                07 Dec 2015, 20:03
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}

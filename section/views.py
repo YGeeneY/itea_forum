@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from section.models import Section
+
+
+class SectionView(ListView):
+    model = Section
+    context_object_name = 'sections'
+    template_name = 'landing/base.html'

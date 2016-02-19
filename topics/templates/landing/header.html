@@ -2,7 +2,7 @@
     <div class="container">
 
         <ol class="list-inline pull-left">
-          <li><a href="{% url 'index' %}"><i class="fa fa-home"> Домой</i></a></li>
+          <li><a href="{% url 'main' %}"><i class="fa fa-home"> Домой</i></a></li>
         </ol>
 
         <ol id="myNavbar" class="list-inline pull-right">
@@ -11,10 +11,10 @@
 
             {% if user.is_authenticated %}
                 <li class="list-inline-item "><a href="#">{{ user.username }}</a></li>
-                <li class="list-inline-item"><a href="{% url 'logout' %}"><i class="fa fa-sign-out"> Выйти</i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="fa fa-sign-out"> Выйти</i></a></li>
             {% else %}
-                 <li class="list-inline-item"><a href="{% url 'login' %}"><i class="fa fa-sign-in"> Войти</i></a></li>
-                 <li class="list-inline-item"><a href="{% url 'register' %}">Зарегестрироваться</a></li>
+                 <li class="list-inline-item"><a href="#"><i class="fa fa-sign-in"> Войти</i></a></li>
+                 <li class="list-inline-item"><a href="#">Зарегестрироваться</a></li>
             {% endif %}
 
             <li class="list-inline-item"><a href="#"><i class="fa fa-bars"></i></a></li>

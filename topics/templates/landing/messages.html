@@ -4,12 +4,19 @@
 {% block subheader %}
     {{ topic.name }}
 {% endblock %}
-
+{#{% url 'm_add' pk=topic.id %}#}
 
 {% block subheader_btn %}
-    <a class="btn btn-primary pull-right" href="{% url 'm_add' pk=topic.id %}" style="margin-top: 23px">
-        <i class="fa fa-pencil"> Добавить сообщение </i>
-    </a>
+    {% if topic.state == "O" %}
+        <a class="btn btn-primary pull-right" href="{% url 'm_add' pk=topic.pk slug=topic.section.slug %}" style="margin-top: 23px">
+            <i class="fa fa-pencil"> Добавить сообщение </i>
+        </a>
+    {% else %}
+        <a class="btn btn-primary pull-right disabled" href="#" style="margin-top: 23px">
+            <i class="fa fa-lock"> Тема закрыта </i>
+        </a>
+    {% endif %}
+
 {% endblock %}
 
 {% block infopanel_text %}
@@ -36,7 +43,15 @@
                         <h4>!TODO message title<small class="pull-right">#{{ message.id }}</small></h4><hr>
                     </div>
 
-                    {{ message.text | linebreaks}}
+                    {% if message.colorize %}
+
+                        {{ message.colorize.0|linebreaks}}
+                        <pre class="prettyprint">{{ message.colorize.1}}</pre>
+                        {{ message.colorize.2|linebreaks}}
+
+                    {% else %}
+                        {{ message|linebreaks }}
+                    {% endif %}
 
                     <div class="row" style="padding: 5px; background: #FCFCFC; border-top: 1px solid #F0F0F0;">
                         <a href="">Цитировать</a>

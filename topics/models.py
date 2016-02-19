@@ -1,10 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from section.models import Section
+
 
 TOPIC_STATE = (
     ('C', 'Closed'),
-    ('O', 'Open')
+    ('O', 'Open'),
+    ('S', 'Closed by section')
 )
 
 
@@ -21,15 +24,22 @@ class Topic(models.Model):
     state = models.CharField(max_length=1, choices=TOPIC_STATE, default='O')
     author = models.ForeignKey(User)
     moder = models.ForeignKey(Moder)
-
-    def __str__(self):
-        return self.name
+    section = models.ForeignKey(Section)
 
     class Meta:
         verbose_name_plural = 'Темы'
 
+    def topic_icon(self):
+        if self.state == 'O':
+            return 'fa fa-comment-o fa-3x'
+        else:
+            return 'fa fa-lock fa-3x'
+
+    def __str__(self):
+        return self.name
+
     def get_absolute_url(self):
-        return "/topics/{}".format(self.pk)
+        return "/%s/%s" % (self.section.slug ,self.pk)
 
 
 class Message(models.Model):

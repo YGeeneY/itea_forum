@@ -16,7 +16,7 @@ def logout_view(request):
 class LoginView(FormView):
     form_class = AuthenticationForm
     template_name = 'landing/login.html'
-    success_url = '/topics/index'
+    success_url = '/topics/'
 
     def form_valid(self, form):
         username = form.cleaned_data['username']

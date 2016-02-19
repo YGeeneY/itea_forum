@@ -1,6 +1,8 @@
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, ListView
 
+from section.models import Section
 from .models import Topic, Moder, Message
 
 
@@ -8,23 +10,38 @@ class IndexView(ListView):
     model = Topic
     template_name = 'landing/topic.html'
     context_object_name = 'topics'
-    # template_name = 'index.html'
+
+    def get_queryset(self):
+        qs = super(IndexView, self).get_queryset()
+        slug = self.kwargs['slug']
+        qs = qs.filter(section__slug=slug)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data()
+        slug = self.kwargs['slug']
+        context['slug'] = slug
+        context['section'] = get_object_or_404(Section, slug=slug)
+        return context
 
 
 class AddView(CreateView):
     template_name = 'landing/add_new_topic.html'
-    success_url = '/topics/index'
     model = Topic
-
     fields = ('name', )
 
     def form_valid(self, form):
         topic = form.save(commit=False)
         topic.author = self.request.user
         topic.moder = Moder.objects.get(pk=1)
+        slug = self.kwargs['slug']
+        topic.section = get_object_or_404(Section, slug=slug)
+
         topic.save()
 
-        return redirect(self.success_url)
+        return redirect(
+            reverse_lazy('index', kwargs={'slug': slug})
+        )
 
 
 class MessageAddView(CreateView):
@@ -36,11 +53,14 @@ class MessageAddView(CreateView):
         message = form.save(commit=False)
         message.author = self.request.user
         pk = self.kwargs['pk']
+        slug = self.kwargs['slug']
         topic = get_object_or_404(Topic, pk=pk)
         message.topic = topic
         message.save()
 
-        return redirect('/topics/%s' % pk)
+        return redirect(
+            reverse_lazy('topic', kwargs={'slug': slug, 'pk': pk})
+        )
 
 
 class MessageListView(ListView):
