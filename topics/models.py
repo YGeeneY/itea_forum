@@ -17,6 +17,9 @@ class Moder(models.Model):
     class Meta:
         verbose_name_plural = 'Модераторы'
 
+    def __str__(self):
+        return self.moder.username
+
 
 class Topic(models.Model):
     name = models.CharField(verbose_name='Тема', max_length=1000, unique_for_date='date')

@@ -6,7 +6,7 @@
 
 {% block subheader_btn %}
     {% if section.is_open %}
-        <a class="btn btn-primary pull-right" href="{% url 'add' slug=slug %}" style="margin-top: 23px">
+        <a class="btn btn-primary pull-right" href="{% url 'add_topic' slug=slug %}" style="margin-top: 23px">
             <i class="fa fa-pencil"> Создать новую тему</i>
         </a>
     {% else %}

@@ -19,7 +19,7 @@ def logout_view(request):
 class LoginView(FormView):
     form_class = AuthenticationForm
     template_name = 'landing/login.html'
-    success_url = reverse_lazy('main')
+    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
@@ -33,7 +33,7 @@ class LoginView(FormView):
 class RegisterView(FormView):
     form_class = UserCreateForm
     template_name = 'landing/register.html'
-    success_url = reverse_lazy('main')
+    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
         username = form.cleaned_data['username']

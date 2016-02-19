@@ -6,26 +6,26 @@ from section.models import Section
 from .models import Topic, Moder, Message
 
 
-class IndexView(ListView):
+class TopicView(ListView):
     model = Topic
     template_name = 'landing/topic.html'
     context_object_name = 'topics'
 
     def get_queryset(self):
-        qs = super(IndexView, self).get_queryset()
+        qs = super(TopicView, self).get_queryset()
         slug = self.kwargs['slug']
         qs = qs.filter(section__slug=slug)
         return qs
 
     def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data()
+        context = super(TopicView, self).get_context_data()
         slug = self.kwargs['slug']
         context['slug'] = slug
         context['section'] = get_object_or_404(Section, slug=slug)
         return context
 
 
-class AddView(CreateView):
+class TopAddView(CreateView):
     template_name = 'landing/add_new_topic.html'
     model = Topic
     fields = ('name', )
@@ -40,7 +40,7 @@ class AddView(CreateView):
         topic.save()
 
         return redirect(
-            reverse_lazy('index', kwargs={'slug': slug})
+            reverse_lazy('topic', kwargs={'slug': slug})
         )
 
 
@@ -59,7 +59,7 @@ class MessageAddView(CreateView):
         message.save()
 
         return redirect(
-            reverse_lazy('topic', kwargs={'slug': slug, 'pk': pk})
+            reverse_lazy('topic_messages', kwargs={'slug': slug, 'pk': pk})
         )
 
 

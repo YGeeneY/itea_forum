@@ -4,11 +4,11 @@
 {% block subheader %}
     {{ topic.name }}
 {% endblock %}
-{#{% url 'm_add' pk=topic.id %}#}
+
 
 {% block subheader_btn %}
     {% if topic.state == "O" %}
-        <a class="btn btn-primary pull-right" href="{% url 'm_add' pk=topic.pk slug=topic.section.slug %}" style="margin-top: 23px">
+        <a class="btn btn-primary pull-right" href="{% url 'add_topic_message' pk=topic.pk slug=topic.section.slug %}" style="margin-top: 23px">
             <i class="fa fa-pencil"> Добавить сообщение </i>
         </a>
     {% else %}

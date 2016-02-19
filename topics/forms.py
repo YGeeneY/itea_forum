@@ -1,10 +1,8 @@
-import re
-
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from topics.models import Topic, Message, Moder
+from topics.models import Message
 
 
 class MessageModelForm(forms.ModelForm):
@@ -27,4 +25,3 @@ class UserCreateForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
-
