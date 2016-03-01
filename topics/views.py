@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, ListView
@@ -26,7 +27,8 @@ class TopicView(ListView):
         return context
 
 
-class TopAddView(CreateView):
+class TopAddView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
     template_name = 'landing/add_new_topic.html'
     model = Topic
     fields = ('name', 'short_description')
@@ -46,7 +48,8 @@ class TopAddView(CreateView):
         )
 
 
-class MessageAddView(CreateView):
+class MessageAddView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
     template_name = 'landing/add_new_message.html'
     model = Message
     fields = ('title', 'text', )

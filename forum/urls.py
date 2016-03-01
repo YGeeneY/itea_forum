@@ -26,6 +26,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', SectionView.as_view(), name='index'),
     url(r'^(?P<slug>[\w-]+)/', include(topics.urls)),
-    url(r'^account/', include(accounts.urls)),
-
+    url(r'^accounts/', include(accounts.urls)),
 ]
