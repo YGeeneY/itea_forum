@@ -111,7 +111,7 @@ body{
 
 .login-alert{
     position: fixed;
-    bottom: 40px;
+    bottom: -500px;
     z-index: 999;
     background: rgba(118,210,25,0.9);
     border-radius: 5px;

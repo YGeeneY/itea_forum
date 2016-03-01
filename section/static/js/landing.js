@@ -36,7 +36,12 @@ $(document).ready(function() {
         $('#popup-login').slideToggle()
     });
 
-    $('.login-alert').delay(3000).fadeOut(1000, 'swing');
+
+
+    $('.login-alert')
+        .animate({bottom: "40px"}, 300, 'swing')
+        .delay(2000).fadeOut(500, 'swing');
+
     $('.close').on('click', function(e){
         e.preventDefault();
         $(this).parent().hide()
