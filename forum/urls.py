@@ -24,7 +24,9 @@ from section.views import SectionView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include(accounts.urls)),
     url(r'^$', SectionView.as_view(), name='index'),
     url(r'^(?P<slug>[\w-]+)/', include(topics.urls)),
-    url(r'^accounts/', include(accounts.urls)),
+
 ]
+

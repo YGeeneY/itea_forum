@@ -1,0 +1,15 @@
+{% extends 'landing/account.html' %}
+
+{% block page_content %}
+
+    {% for incoming in user_profile %}
+        {{ incoming.id }}
+        {{ incoming.sender.username }}<br>
+        {{ incoming.title }} <br>
+        {{ incoming.message }} <br>
+        {{ incoming.date }}
+
+    {% endfor %}
+
+    asd
+{% endblock %}

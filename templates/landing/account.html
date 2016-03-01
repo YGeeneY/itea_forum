@@ -1,0 +1,26 @@
+{% extends 'landing/deep_base.html' %}
+
+{% block infopanel %}
+{% endblock %}
+
+{% block subheader %}
+ {{ user_profile.username }}
+{% endblock %}
+
+{% block page_content %}
+    Статистика <br>
+    {{ user_profile.userdetails.get_post_frequency }}
+    <br><br><br>
+
+    {% if user_profile.message_set.count %}
+        Последние сообщения:
+        {% for i in user_profile.message_set.all %}
+            <p>{{ i.text | truncatechars:"20"}}</p>
+        {% endfor %}
+    {% endif %}
+
+    <br><br><br>
+
+
+
+{% endblock %}

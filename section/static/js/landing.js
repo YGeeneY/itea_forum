@@ -41,5 +41,15 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).parent().hide()
     });
+
+    (function(){
+        var location = window.location.pathname,
+            $popUpLogin = $("#popup-login"),
+            currentAction = $popUpLogin.attr('action');
+
+        $popUpLogin.attr('action', currentAction + '?next=' + location)
+
+    })();
+
 });
 

@@ -1,0 +1,9 @@
+{% extends 'landing/account.html' %}
+{% block page_content %}
+
+{{ object.id }}
+{{ object.sender.username }}<br>
+{{ object.title }} <br>
+{{ object.message }} <br>
+{{ object.date }}
+{% endblock %}
