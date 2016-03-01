@@ -23,6 +23,7 @@ class Moder(models.Model):
 
 class Topic(models.Model):
     name = models.CharField(verbose_name='Тема', max_length=1000, unique_for_date='date')
+    short_description = models.CharField(verbose_name='Карткое описание' ,max_length=150, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     state = models.CharField(max_length=1, choices=TOPIC_STATE, default='O')
     author = models.ForeignKey(User)
@@ -46,6 +47,7 @@ class Topic(models.Model):
 
 
 class Message(models.Model):
+    title = models.CharField(max_length=150, blank=True)
     author = models.ForeignKey(User, verbose_name='Автор')
     topic = models.ForeignKey(Topic, verbose_name='Тема')
     date = models.DateField('Дата', auto_now_add=True)

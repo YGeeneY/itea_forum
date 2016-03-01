@@ -12,12 +12,12 @@
             {% if user.is_authenticated %}
                 <li class="list-inline-item "><a href="#">{{ user.username }}</a></li>
                 <li class="list-inline-item"><a href="{% url 'logout' %}"><i class="fa fa-sign-out"> Выйти</i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="fa fa-bars"></i></a></li>
             {% else %}
-                 <li class="list-inline-item"><a href="{% url 'login' %}"><i class="fa fa-sign-in"> Войти</i></a></li>
+                 <li class="list-inline-item"><a id="popup" href="{% url 'login' %}"><i class="fa fa-sign-in"> Войти</i></a></li>
                  <li class="list-inline-item"><a href="{% url 'register' %}">Зарегестрироваться</a></li>
             {% endif %}
 
-            <li class="list-inline-item"><a href="#"><i class="fa fa-bars"></i></a></li>
         </ol>
     </div>
 </div>

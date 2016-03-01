@@ -2,6 +2,7 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 from django.shortcuts import redirect
 
 from django.views.generic import FormView
@@ -11,6 +12,7 @@ from topics.forms import UserCreateForm
 
 def logout_view(request):
     logout(request)
+    messages.info(request, 'Вы успешно вышли!' )
     return redirect(
         reverse_lazy('login')
     )
@@ -26,7 +28,7 @@ class LoginView(FormView):
         password = form.cleaned_data['password']
         user = authenticate(username=username, password=password)
         login(self.request, user)
-
+        messages.info(self.request, 'Вы успешно вошли под аккаунтом  %s!' % (username,))
         return super(LoginView, self).form_valid(form)
 
 
@@ -43,4 +45,5 @@ class RegisterView(FormView):
         user = authenticate(username=username, password=password)
         login(self.request, user)
 
+        messages.info(self.request, 'Аккаунт %s успешно создан!' % (username,))
         return super(RegisterView, self).form_valid(form)

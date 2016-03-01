@@ -19,6 +19,15 @@
 
 {% include 'landing/header.html' %}
 
+{% if messages %}
+<div class="login-alert col-md-8 col-md-offset-2 text-center">
+    {% for message in messages %}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+
 {% block content %}
     <div id="site-desc-full">
         <div id="page-description" class="text-md-center">
@@ -33,12 +42,12 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-{#                    <th><a href="{{ section.slug }}">{{ section.name }}</a></th>#}
-{#                    <th></th>#}
-{#                    <th class="hidden-md-down"></th>#}
-{#                    <th class="text-right"><i class="fa fa-minus-circle toggle-topic"></i></th>#}
+                             <th colspan="6"  class="text-center"  style="border-bottom: none"><a href="{{ section.slug }}">{{ section.name }}</a></th>
 
-                    <th><a href="{{ section.slug }}">{{ section.name }}</a></th>
+                </tr>
+                <tr>
+                    <th>Состояние</th>
+{#                    <th><a href="{{ section.slug }}">{{ section.name }}</a></th>#}
                     <th>Тема</th>
                     <th>rss</th>
                     <th class="hidden-md-down text-center">Всего сообщений</th>
@@ -54,14 +63,15 @@
                             <i class="{{ topic.topic_icon }}"></i>
                         </td>
 
-                        <td>
+                        <td class="col-md-6">
                             <h4>
                                 {% if topic.message_set.count >= 10 %}
                                     <i data-toggle="tooltip" data-placement="bottom" title="Hot" class="fa fa-fire" style="color: red; cursor: help"></i>
                                 {% endif %}
 
-                                <a href="{{ topic.get_absolute_url }}">{{ topic.name }}</a>
+                                <a href="{{ topic.get_absolute_url }}">{{ topic.name }} </a>
                             </h4>
+                            <smal>{{ topic.short_description }}</smal>
                         </td>
 
                         <td><i class="fa fa-rss"></i></td>
@@ -93,6 +103,29 @@
         </div>
     </div>
 {% endblock content %}
+
+    <form id="popup-login" class="form-signin" method="post" action="{% url 'login' %}">
+        <h2 class="form-signin-heading">Пожалуйста, введите логин и пароль</h2>
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label class="control-label  " for="id_username">Имя пользователя</label>
+            <div class=" ">
+                <input class=" form-control" id="id_username" maxlength="254" name="username" type="text">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label  " for="id_password">Пароль</label>
+            <div class=" ">
+                <input class=" form-control" id="id_password" name="password" type="password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button style="margin-top: 15px" class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+        </div>
+    </form>
 
 {% include 'landing/back_to_top_btn.html' %}
 {#{% include 'landing/footer.html' %}#}

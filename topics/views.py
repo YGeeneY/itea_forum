@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, ListView
@@ -28,7 +29,7 @@ class TopicView(ListView):
 class TopAddView(CreateView):
     template_name = 'landing/add_new_topic.html'
     model = Topic
-    fields = ('name', )
+    fields = ('name', 'short_description')
 
     def form_valid(self, form):
         topic = form.save(commit=False)
@@ -36,6 +37,7 @@ class TopAddView(CreateView):
         topic.moder = Moder.objects.get(pk=1)
         slug = self.kwargs['slug']
         topic.section = get_object_or_404(Section, slug=slug)
+        messages.info(self.request, 'Тема успешно добавлена!')
 
         topic.save()
 
@@ -47,7 +49,7 @@ class TopAddView(CreateView):
 class MessageAddView(CreateView):
     template_name = 'landing/add_new_message.html'
     model = Message
-    fields = ('text', )
+    fields = ('title', 'text', )
 
     def form_valid(self, form):
         message = form.save(commit=False)
@@ -56,7 +58,16 @@ class MessageAddView(CreateView):
         slug = self.kwargs['slug']
         topic = get_object_or_404(Topic, pk=pk)
         message.topic = topic
+
+        if not message.title:
+            if topic.message_set.count() == 0:
+                prefix = ''
+            else:
+                prefix = 'RE:'
+            message.title = '%s %s' % (prefix,topic.name,)
+
         message.save()
+        messages.info(self.request, 'Сообщение успешно добавлено')
 
         return redirect(
             reverse_lazy('topic_messages', kwargs={'slug': slug, 'pk': pk})
@@ -66,7 +77,7 @@ class MessageAddView(CreateView):
 class MessageListView(ListView):
     template_name = 'landing/messages.html'
     model = Message
-    context_object_name = 'messages'
+    context_object_name = 'topic_messages'
 
     def get_context_data(self, **kwargs):
         context = super(MessageListView, self).get_context_data()

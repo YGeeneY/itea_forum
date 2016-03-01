@@ -30,5 +30,16 @@ $(document).ready(function() {
             scrollTop: 0
         }, 300);
     });
+
+    $('#popup').on("click", function (e) {
+        e.preventDefault();
+        $('#popup-login').slideToggle()
+    });
+
+    $('.login-alert').delay(3000).fadeOut(1000, 'swing');
+    $('.close').on('click', function(e){
+        e.preventDefault();
+        $(this).parent().hide()
+    });
 });
 

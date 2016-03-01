@@ -13,7 +13,7 @@ class Section(models.Model):
     is_open = models.BooleanField(default=True)
 
     def last_five(self):
-        return self.topic_set.all()[:5]
+        return self.topic_set.all().order_by('-id')[:5]
 
     def make_slug(self):
         unique = str(uuid.uuid4())[:5]

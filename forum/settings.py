@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'topics',
     'section',
     'bootstrapform',
+    'unidecode'
 ]
 
 MIDDLEWARE_CLASSES = [
