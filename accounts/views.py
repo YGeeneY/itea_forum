@@ -1,11 +1,13 @@
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, get_object_or_404
 
-from django.views.generic import FormView, DetailView, TemplateView
+from django.views.generic import FormView, DetailView, TemplateView, CreateView
 
 from topics.forms import UserCreateForm
 
@@ -66,7 +68,7 @@ class AccountView(DetailView):
 
 
 class SelfAccountView(TemplateView):
-    template_name = 'landing/account.html'
+    template_name = 'landing/account_self.html'
 
     def get_context_data(self, **kwargs):
         context = super(SelfAccountView, self).get_context_data()
@@ -81,7 +83,7 @@ class InboxView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(InboxView, self).get_context_data()
         user = self.request.user
-        context['user_profile'] = UserMessages.objects.filter(receiver=user)
+        context['user_messages'] = UserMessages.objects.filter(receiver=user)
         return context
 
 
@@ -91,5 +93,39 @@ class InboxDetailView(DetailView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
+
+        if self.object.receiver != self.request.user:
+            return HttpResponseForbidden()
+
+        self.object.read = True
+        self.object.save()
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
+
+
+class PrivateMessageView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
+    template_name = 'landing/add_new_private_message.html'
+    model = UserMessages
+    fields = ('title', 'message')
+
+    def form_valid(self, form):
+        message = form.save(commit=False)
+        message.sender = self.request.user
+        username = self.kwargs['username']
+
+        try:
+            receiver = User.objects.get(username=username)
+            message.receiver = receiver
+            message.save()
+
+            messages.info(self.request, 'Сообщение пользователю %s успешно отправленно' % (receiver,))
+
+        except User.DoesNotExist:
+            messages.error(self.request, 'Пользователь %s не найден' % username)
+            return redirect(
+                reverse_lazy('self_account')
+            )
+        return redirect(
+            reverse_lazy('account', kwargs={'slug': username})
+        )

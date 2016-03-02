@@ -35,6 +35,13 @@ class UserDetails(models.Model):
         return 'user: %s additional info' % (self.user.username,)
 
 
+class FilterNewManager(models.Manager):
+    use_for_related_fields = True
+
+    def get_unread(self):
+        return super(FilterNewManager, self).get_queryset().filter(read=False)
+
+
 class UserMessages(models.Model):
     receiver = models.ForeignKey(User)
     sender = models.ForeignKey(User, related_name='sender')
@@ -42,3 +49,8 @@ class UserMessages(models.Model):
     message = models.TextField()
     read = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
+
+    objects = FilterNewManager()
+
+    class Meta:
+        ordering = ['-date']

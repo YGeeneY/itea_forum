@@ -17,15 +17,50 @@
 </head>
 <body>
 
-{% include 'landing/header.html' %}
+<div id="header" class="navbar-fixed-top">
+    <div class="container">
+
+        <ol class="list-inline pull-left">
+          <li>
+              <a href="{% url 'index' %}"><i class="fa fa-home"> Домой</i></a>
+              {% block breadcrumb %}
+              {% endblock %}
+          </li>
+        </ol>
+
+        <ol id="myNavbar" class="list-inline pull-right">
+            <li class="list-inline-item hidden-xs"><a href="/obshchaia-informatsiia-o-forumecc68c/1/">FAQ</a></li>
+            <li class="list-inline-item  hidden-xs"><a href="#"><i class="fa fa-search"></i></a></li>
+
+            {% if user.is_authenticated %}
+                <li class="list-inline-item "><a href="{% url 'self_account' %}">{{ user.username }}</a>
+
+                {% if new_incoming.count  %}
+                   <i id="blink" class="fa fa-envelope" style="color: black;"></i>
+                {% endif %}
+
+                </li>
+                <li class="list-inline-item"><a href="{% url 'logout' %}"><i class="fa fa-sign-out"> Выйти</i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="fa fa-bars"></i></a></li>
+            {% else %}
+                 <li class="list-inline-item"><a id="popup" href="{% url 'login' %}"><i class="fa fa-sign-in"> Войти</i></a></li>
+                 <li class="list-inline-item"><a href="{% url 'register' %}">Зарегестрироваться</a></li>
+            {% endif %}
+
+        </ol>
+    </div>
+</div>
+
 
 {% if messages %}
-<div class="login-alert col-md-8 col-md-offset-2 text-center">
+<div class="message-alert col-md-8 col-md-offset-2 text-center">
     {% for message in messages %}
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="#" class="close {{ message.tags }}" data-dismiss="alert" aria-label="close">&times;</a>
             {{ message }}
     {% endfor %}
 </div>
+{% else %}
+    <span class="close none" style="display: none"></span>
 {% endif %}
 
 {% block content %}
@@ -71,7 +106,7 @@
 
                                 <a href="{{ topic.get_absolute_url }}">{{ topic.name }} </a>
                             </h4>
-                            <smal>{{ topic.short_description }}</smal>
+                            <small>{{ topic.short_description }}</small>
                         </td>
 
                         <td><i class="fa fa-rss"></i></td>
@@ -79,14 +114,14 @@
                         <td class="text-center">{{ topic.message_set.count }}</td>
 
                         <td class="text-center">
-                            Автор: {{ topic.author }}
+                            Автор: <a href="{% url 'account' slug=topic.author %}">{{ topic.author }}</a>
                             <br>
                             <small><i class="fa fa-clock-o"></i> {{ topic.date }}</small>
                         </td>
 
                         {% if topic.message_set.count  %}
                             <td class="hidden-xs hidden-sm text-center">
-                                Автор: {{ topic.message_set.last.author }}
+                                Автор: <a href="{% url 'account' slug=topic.message_set.last.author %}">{{ topic.message_set.last.author }}</a>
                                 <br>
                                 <small><i class="fa fa-clock-o"></i> {{ topic.message_set.last.date }}</small>
                             </td>

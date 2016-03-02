@@ -61,14 +61,14 @@
                         <td class="text-center">{{ topic.message_set.count }}</td>
 
                         <td class="text-center">
-                            Автор: {{ topic.author }}
+                            Автор: <a href="{% url 'account' slug=topic.author %}">{{ topic.author }}</a>
                             <br>
                             <small><i class="fa fa-clock-o"></i> {{ topic.date }}</small>
                         </td>
 
                         {% if topic.message_set.count  %}
                             <td class="hidden-xs hidden-sm text-right">
-                                Автор: {{ topic.message_set.last.author }}
+                                Автор: <a href="{% url 'account' slug=topic.message_set.last.author %}">{{ topic.message_set.last.author }}</a>
                                 <br>
                                 <small><i class="fa fa-clock-o"></i> {{ topic.message_set.last.date }}</small>
                             </td>

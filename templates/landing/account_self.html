@@ -1,0 +1,31 @@
+{% extends 'landing/deep_base.html' %}
+
+{% block infopanel %}
+{% endblock %}
+
+{% block subheader %}
+ {{ user_profile.username }}
+{% endblock %}
+
+{% block subheader_btn %}
+    <a class="btn btn-primary pull-right" href="{% url 'inbox' %}" style="margin-top: 23px">
+        <i class="fa fa-comments-o"> Личные сообщения </i>
+        {% if new_incoming.count %}
+           <span class="badge"> {{ new_incoming.count }} </span>
+        {% endif %}
+    </a>
+{% endblock %}
+
+
+{% block page_content %}
+<div class="container">
+        Статистика: <br>
+        {{ user_profile.userdetails.get_post_frequency }}
+        {% if user_profile.message_set.count %}
+            Последние сообщения:
+            {% for i in user_profile.message_set.all %}
+                <p>{{ i.text | truncatechars:"20"}}</p>
+            {% endfor %}
+        {% endif %}
+</div>
+{% endblock %}

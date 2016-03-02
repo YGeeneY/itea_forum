@@ -37,15 +37,28 @@ $(document).ready(function() {
     });
 
 
-
-    $('.login-alert')
+    $('.message-alert')
         .animate({bottom: "40px"}, 300, 'swing')
         .delay(2000).fadeOut(500, 'swing');
 
-    $('.close').on('click', function(e){
-        e.preventDefault();
-        $(this).parent().hide()
-    });
+    (function(){
+        var $close = $('.close'),
+            messageClass = $close.attr('class').split(' ')[1];
+
+        if (messageClass === 'error'){
+            $close.parent().css({
+                background: 'red',
+                border: '1px solid red',
+                color: 'white'
+            });
+        }
+
+        $close.on('click', function(e){
+            e.preventDefault();
+            $(this).parent().hide()
+        });
+
+    })();
 
     (function(){
         var location = window.location.pathname,
@@ -56,5 +69,10 @@ $(document).ready(function() {
 
     })();
 
+    setInterval(function(){
+        $('#blink')
+            .animate({opacity: '0'}, 1000, 'swing')
+            .animate({opacity: '1'}, 1000, 'swing')
+    }, 1000);
 });
 

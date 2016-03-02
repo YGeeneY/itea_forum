@@ -19,8 +19,12 @@
 
 {% endblock %}
 
+{% block breadcrumb %}
+/ <a href="/{{ topic.section.slug }}"> {{ topic.section.name }}</a>
+{% endblock %}
+
 {% block infopanel_text %}
-    Сообщений: {{ topic_messages.count }}
+    Сообщений: {{ topic.message_set.count }}
 {% endblock %}
 
 {% block page_content %}
@@ -31,7 +35,7 @@
                 <div class="col-md-1">
                     <i class="fa fa-user fa-5x"></i>
                     <br>
-                    <strong>{{ message.author }}</strong>
+                    <a href="{% url 'account' slug=message.author %}"><strong>{{ message.author }}</strong></a>
                 </div>
                 <div class="col-md-11" style="
                 border: medium none;
@@ -54,7 +58,7 @@
                     {% endif %}
 
                     <div class="row" style="padding: 5px; background: #FCFCFC; border-top: 1px solid #F0F0F0;">
-                        <a href="">Цитировать</a>
+{#                        <a href="">Цитировать</a>#}
                         <span class="pull-right">{{ message.date }}</span>
                     </div>
                 </div>

@@ -52,7 +52,7 @@ class MessageAddView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     template_name = 'landing/add_new_message.html'
     model = Message
-    fields = ('title', 'text', )
+    fields = ('title', 'text',)
 
     def form_valid(self, form):
         message = form.save(commit=False)
@@ -81,6 +81,7 @@ class MessageListView(ListView):
     template_name = 'landing/messages.html'
     model = Message
     context_object_name = 'topic_messages'
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(MessageListView, self).get_context_data()

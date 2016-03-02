@@ -2,7 +2,11 @@
     <div class="container">
 
         <ol class="list-inline pull-left">
-          <li><a href="{% url 'index' %}"><i class="fa fa-home"> Домой</i></a></li>
+          <li>
+              <a href="{% url 'index' %}"><i class="fa fa-home"> Домой</i></a> /
+              {% block breadcrumb %}
+              {% endblock %}
+          </li>
         </ol>
 
         <ol id="myNavbar" class="list-inline pull-right">

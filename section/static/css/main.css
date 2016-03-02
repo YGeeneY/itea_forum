@@ -109,7 +109,7 @@ body{
   box-shadow: 2px 1px 10px 1px;
 }
 
-.login-alert{
+.message-alert{
     position: fixed;
     bottom: -500px;
     z-index: 999;

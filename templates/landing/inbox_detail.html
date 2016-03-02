@@ -1,9 +1,23 @@
-{% extends 'landing/account.html' %}
-{% block page_content %}
+{% extends 'landing/account_self.html' %}
 
-{{ object.id }}
+{% block subheader %}
+    Входящее сообщение от {{ object.sender.username }}
+{% endblock %}
+
+{% block breadcrumb %}
+/ <a href="{% url 'self_account' %}"> {{ user.username }}</a>
+/ <a href="{% url 'inbox' %}"> Личные сообщения </a>
+{% endblock %}
+
+{% block subheader_btn %}
+    <a class="btn btn-primary pull-right" href="{% url 'send_mail' username=object.sender.username %}" style="margin-top: 23px">
+        <i class="fa fa-pencil-square"> Ответить </i>
+    </a>
+{% endblock %}
+
+{% block page_content %}
 {{ object.sender.username }}<br>
 {{ object.title }} <br>
-{{ object.message }} <br>
+{{ object.message | linebreaks }} <br>
 {{ object.date }}
 {% endblock %}

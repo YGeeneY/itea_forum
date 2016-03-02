@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from .views import logout_view, RegisterView, LoginView, AccountView, InboxView, InboxDetailView, SelfAccountView
+from .views import logout_view, RegisterView, LoginView, AccountView, InboxView, InboxDetailView, SelfAccountView, \
+    PrivateMessageView
 
 urlpatterns = [
     url(r"^$",
@@ -28,11 +29,11 @@ urlpatterns = [
         login_required(InboxDetailView.as_view()),
         name='inbox_detail'),
 
-
+    url(r"^(?P<username>\w+)/send_message/$",
+        PrivateMessageView.as_view(),
+        name='send_mail'),
 
     url(r"^(?P<slug>\w+)/$",
         AccountView.as_view(),
         name='account'),
-
-
 ]

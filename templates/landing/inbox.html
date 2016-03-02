@@ -1,15 +1,31 @@
-{% extends 'landing/account.html' %}
+{% extends 'landing/account_self.html' %}
+
+
+{% block subheader_btn %}
+{% endblock %}
+
+{% block subheader %}
+    Входящие сообщения
+{% endblock %}
+
+{% block breadcrumb %}
+/ <a href="{% url 'self_account' %}"> {{ user.username }}</a>
+{% endblock %}
 
 {% block page_content %}
-
-    {% for incoming in user_profile %}
-        {{ incoming.id }}
-        {{ incoming.sender.username }}<br>
-        {{ incoming.title }} <br>
-        {{ incoming.message }} <br>
-        {{ incoming.date }}
-
+    {% for incoming in user_messages %}
+        {% if incoming.read %}
+            <a href="{% url 'inbox_detail' pk=incoming.id  %}">{{ incoming.title }}</a> <br>
+            from: {{ incoming.sender.username }}<br>
+            message: {{ incoming.message | linebreaks }} <br>
+            date: {{ incoming.date }} <br>
+        {% else %}
+            <b>
+               <a href="{% url 'inbox_detail' pk=incoming.id  %}">{{ incoming.title }}</a> <br>
+               from:  {{ incoming.sender.username }}<br>
+               message:  {{ incoming.message |linebreaks }} <br>
+               date: {{ incoming.date }} <br>
+            </b>
+        {% endif %}
     {% endfor %}
-
-    asd
 {% endblock %}
