@@ -12,6 +12,7 @@ class TopicView(ListView):
     model = Topic
     template_name = 'landing/topic.html'
     context_object_name = 'topics'
+    paginate_by = 5
 
     def get_queryset(self):
         qs = super(TopicView, self).get_queryset()
