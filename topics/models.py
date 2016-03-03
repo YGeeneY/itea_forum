@@ -23,7 +23,10 @@ class Moder(models.Model):
 
 class Topic(models.Model):
     name = models.CharField(verbose_name='Тема', max_length=1000, unique_for_date='date')
-    short_description = models.CharField(verbose_name='Карткое описание' ,max_length=150, blank=True, null=True)
+    short_description = models.CharField(verbose_name='Карткое описание',
+                                         max_length=150,
+                                         blank=True,
+                                         null=True)
     date = models.DateField(auto_now_add=True)
     state = models.CharField(max_length=1, choices=TOPIC_STATE, default='O')
     author = models.ForeignKey(User)
@@ -39,11 +42,11 @@ class Topic(models.Model):
         else:
             return 'fa fa-lock fa-3x'
 
-    def __str__(self):
-        return self.name
-
     def get_absolute_url(self):
         return "/%s/%s" % (self.section.slug ,self.pk)
+
+    def __str__(self):
+        return self.name
 
 
 class Message(models.Model):
@@ -54,6 +57,10 @@ class Message(models.Model):
     text = models.TextField('Текст сообщения')
     rate = models.IntegerField('Рейтинг', default=0)
 
+    class Meta:
+        verbose_name_plural = 'Сообщения'
+        verbose_name = "Сообщение"
+
     def colorize(self):
         code = '*code*'
         return self.text.split(code) if self.text.count(code) == 2 else False
@@ -61,6 +68,3 @@ class Message(models.Model):
     def __str__(self):
         return self.text
 
-    class Meta:
-        verbose_name_plural = 'Сообщения'
-        verbose_name = "Сообщение"

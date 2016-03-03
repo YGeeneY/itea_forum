@@ -33,7 +33,7 @@ urlpatterns = [
         PrivateMessageView.as_view(),
         name='send_mail'),
 
-    url(r"^(?P<slug>\w+)/$",
+    url(r"^(?P<username>\w+)/$",
         AccountView.as_view(),
         name='account'),
 ]

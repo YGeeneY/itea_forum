@@ -2,7 +2,6 @@ import uuid
 
 from django.db.models.signals import post_save
 from unidecode import unidecode
-
 from django.db import models
 from django.utils.text import slugify
 

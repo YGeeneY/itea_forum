@@ -63,6 +63,7 @@ class RegisterView(FormView):
 class AccountView(DetailView):
     model = User
     template_name = 'landing/account.html'
+    slug_url_kwarg = 'username'
     slug_field = 'username'
     context_object_name = 'user_profile'
 
