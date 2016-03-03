@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block subheader %}
- {{ user_profile.username }}
+ {{ user.username }}
 {% endblock %}
 
 {% block subheader_btn %}
@@ -20,10 +20,10 @@
 {% block page_content %}
 <div class="container">
         Статистика: <br>
-        {{ user_profile.userdetails.get_post_frequency }}
-        {% if user_profile.message_set.count %}
+        {{ user.userdetails.get_post_frequency }}
+        {% if user.message_set.count %}
             Последние сообщения:
-            {% for i in user_profile.message_set.all %}
+            {% for i in user.message_set.all %}
                 <p>{{ i.text | truncatechars:"20"}}</p>
             {% endfor %}
         {% endif %}

@@ -18,8 +18,10 @@ def messages(request, *args, **kwargs):
             if sender:
                 try:
                     sender = User.objects.get(username=sender)
-                    context['history'] = UserMessages.objects.filter(receiver=user,
-                                                                     sender=sender)
+                    context['sender'] = sender
+                    context['history'] = UserMessages.objects.filter(
+                        Q(receiver=user, sender=sender) | Q(receiver=sender, sender=user)
+                    )
                 except User.DoesNotExist:
                     pass
 

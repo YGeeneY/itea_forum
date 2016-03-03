@@ -6,12 +6,3 @@
         <i class="fa fa-pencil-square"> Написать личное сообщение </i>
     </a>
 {% endblock %}
-
-{% block page_content %}
-    {% for i in history %}
-     <p>{{ i.message | linebreaks }}</p>
-
-    {% endfor %}
-
-
-{% endblock %}

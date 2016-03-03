@@ -11,6 +11,14 @@
 
 {% block page_content %}
     <div class="container">
+
+        {% for message in history %}
+        {% if user == message.sender %}
+            <span class="text-left">{{ message.message|linebreaks }}</span>
+        {% else %}
+            <span class="text-right">{{ message.message|linebreaks }}</span>
+        {% endif %}
+    {% endfor %}
         <div class="form-group">
             <form method="post">
                 {% csrf_token %}

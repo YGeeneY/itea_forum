@@ -1,16 +1,21 @@
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate
+from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
+
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseForbidden
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 
-from django.views.generic import FormView, DetailView, TemplateView, CreateView
+from django.views.generic import FormView
+from django.views.generic import DetailView
+from django.views.generic import TemplateView
+from django.views.generic import CreateView
 
-from topics.forms import UserCreateForm
-
+from .forms import UserCreateForm
 from .models import UserDetails, UserMessages
 
 
@@ -68,17 +73,11 @@ class AccountView(DetailView):
     context_object_name = 'user_profile'
 
 
-class SelfAccountView(TemplateView):
+class SelfAccountView(LoginRequiredMixin, TemplateView):
     template_name = 'landing/account_self.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(SelfAccountView, self).get_context_data()
-        user = self.request.user
-        context['user_profile'] = user
-        return context
 
-
-class InboxView(TemplateView):
+class InboxView(LoginRequiredMixin, TemplateView):
     template_name = 'landing/inbox.html'
 
     def get_context_data(self, **kwargs):
@@ -88,7 +87,7 @@ class InboxView(TemplateView):
         return context
 
 
-class InboxDetailView(DetailView):
+class InboxDetailView(LoginRequiredMixin,DetailView):
     model = UserMessages
     template_name = 'landing/inbox_detail.html'
 
@@ -128,5 +127,5 @@ class PrivateMessageView(LoginRequiredMixin, CreateView):
                 reverse_lazy('self_account')
             )
         return redirect(
-            reverse_lazy('account', kwargs={'slug': username})
+            reverse_lazy('pm_history', kwargs={'username': username})
         )
