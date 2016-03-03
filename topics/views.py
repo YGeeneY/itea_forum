@@ -18,6 +18,11 @@ class TopicView(ListView):
         qs = super(TopicView, self).get_queryset()
         slug = self.kwargs['slug']
         qs = qs.filter(section__slug=slug)
+
+        search_query = self.request.GET.get('q')
+        if search_query is not None:
+            qs = qs.filter(name__icontains=search_query)
+
         return qs
 
     def get_context_data(self, **kwargs):
@@ -97,5 +102,9 @@ class MessageListView(ListView):
         pk = self.kwargs['pk']
         topic = get_object_or_404(Topic, pk=pk)
         qs = qs.filter(topic=topic)
+
+        search_query = self.request.GET.get('q')
+        if search_query is not None:
+            qs = qs.filter(text__icontains=search_query)
 
         return qs
