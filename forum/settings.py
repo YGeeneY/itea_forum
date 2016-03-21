@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'topics',
     'section',
     'bootstrapform',
-    'unidecode'
+    'unidecode',
+    'django_bootstrap_markdown'
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -74,5 +74,6 @@ $(document).ready(function() {
             .animate({opacity: '0'}, 1000, 'swing')
             .animate({opacity: '1'}, 1000, 'swing')
     }, 1000);
+
 });
 

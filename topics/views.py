@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, ListView
+from django_bootstrap_markdown.widgets import MarkdownInput
 
 from section.models import Section
 from .models import Topic, Moder, Message
@@ -59,6 +60,11 @@ class MessageAddView(LoginRequiredMixin, CreateView):
     template_name = 'landing/add_new_message.html'
     model = Message
     fields = ('title', 'text',)
+
+    def get_form(self, form_class=None):
+        form = super(MessageAddView, self).get_form()
+        form.fields['text'].widget = MarkdownInput()
+        return form
 
     def form_valid(self, form):
         message = form.save(commit=False)

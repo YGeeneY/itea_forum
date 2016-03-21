@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^accounts/', include(accounts.urls)),
     url(r'^$', SectionView.as_view(), name='index'),
     url(r'^(?P<slug>[\w-]+)/', include(topics.urls)),
+    url(r'^markdown/', include('django_bootstrap_markdown.urls')),
 
 ]
 

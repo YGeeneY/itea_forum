@@ -1,5 +1,7 @@
 {% extends 'landing/deep_base.html' %}
-
+{% block html_head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.js"></script>
+{% endblock %}
 
 {% block subheader %}
     {{ topic.name }}
@@ -46,17 +48,17 @@
                     <div class="row" style="padding: 0 20px">
                         <h4>{{ message.title }}<small class="pull-right">#{{ message.id }}</small></h4><hr>
                     </div>
+                    <div class="message" data-provide="markdown-editable">
+                        {% if message.colorize %}
 
-                    {% if message.colorize %}
+                            {{ message.colorize.0}}
+                            <pre class="prettyprint">{{ message.colorize.1}}</pre>
+                            {{ message.colorize.2}}
 
-                        {{ message.colorize.0|linebreaks}}
-                        <pre class="prettyprint">{{ message.colorize.1}}</pre>
-                        {{ message.colorize.2|linebreaks}}
-
-                    {% else %}
-                        {{ message|linebreaks }}
-                    {% endif %}
-
+                        {% else %}
+                            {{ message|linebreaks }}
+                        {% endif %}
+                    </div>
                     <div class="row" style="padding: 5px; background: #FCFCFC; border-top: 1px solid #F0F0F0;">
 {#                        <a href="">Цитировать</a>#}
                         <span class="pull-right">{{ message.date }}</span>
@@ -64,6 +66,6 @@
                 </div>
             </div>
         </div>
-
     {% endfor %}
+
 {% endblock %}
